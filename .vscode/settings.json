@@ -1,0 +1,18 @@
+{
+    "workbench.iconTheme": "material-icon-theme",
+    "material-icon-theme.folders.associations": {
+        "domain": "rules",
+        "adapters": "pipe"
+    },
+    "material-icon-theme.files.associations": {
+        "*.repository.ts": "Nest-controller",
+        "*.entity.ts": "Nest-controller",
+        "*.exception.ts": "Nest",
+    },
+    "workbench.colorTheme": "Min Tomorrow Dark",
+    "errorLens.enabled": true,
+    "errorLens.messageEnabled": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    }
+}
