@@ -1,0 +1,3 @@
+export const USER_REPOSITORY = Symbol('USER_REPOSITORY');
+export const CREATE_USER_USE_CASE = Symbol('USER_CREATE_USE_CASE');
+export const UPDATE_USER_USE_CASE = Symbol('UPDATE_USER_USE_CASE');

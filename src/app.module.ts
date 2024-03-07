@@ -2,11 +2,14 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import CoreModule from './core/core.module';
 import ConfigurationService from './core/services/configuration.service';
+import SignatureModule from './modules/signature/signature.module';
+import UserModule from './modules/user/user.module';
 
 @Module({
   imports: [
     CoreModule,
-
+    UserModule,
+    SignatureModule,
     TypeOrmModule.forRootAsync({
       imports: [CoreModule],
       inject: [ConfigurationService],
@@ -17,7 +20,7 @@ import ConfigurationService from './core/services/configuration.service';
         username: configurationService.databaseUsername(),
         password: configurationService.databasePassword(),
         database: configurationService.databaseName(),
-        entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        entities: [__dirname + '/**/**/**/**/*.model{.ts,.js}'],
         synchronize: true,
       }),
     }),
