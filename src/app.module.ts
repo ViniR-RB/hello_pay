@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import CoreModule from './core/core.module';
 import ConfigurationService from './core/services/configuration.service';
+import AuthModule from './modules/auth/auth.module';
 import SignatureModule from './modules/signature/signature.module';
 import UserModule from './modules/user/user.module';
 
@@ -10,6 +11,7 @@ import UserModule from './modules/user/user.module';
     CoreModule,
     UserModule,
     SignatureModule,
+    AuthModule,
     TypeOrmModule.forRootAsync({
       imports: [CoreModule],
       inject: [ConfigurationService],

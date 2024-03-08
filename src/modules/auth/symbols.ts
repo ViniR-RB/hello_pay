@@ -1,0 +1,2 @@
+export const LOGIN_USER_USE_CASE = Symbol('LOGIN_USER_USE_CASE');
+export const REGISTER_USER_SERVICE = Symbol('REGISTER_USER_SERVICE');

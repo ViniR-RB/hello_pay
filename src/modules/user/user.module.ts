@@ -39,5 +39,21 @@ import {
         new UpdateUserService(userRepository),
     },
   ],
+  exports: [
+    {
+      inject: [getRepositoryToken(UserModel), EncryptionService],
+      provide: USER_REPOSITORY,
+      useFactory: (
+        userRepository: Repository<UserModel>,
+        encryptionService: EncryptionService,
+      ) => new UserRepositoryImpl(userRepository, encryptionService),
+    },
+    {
+      inject: [USER_REPOSITORY],
+      provide: CREATE_USER_USE_CASE,
+      useFactory: (userRepository: UserRepositoryInterface) =>
+        new CreateUserService(userRepository),
+    },
+  ],
 })
 export default class UserModule {}
