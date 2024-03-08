@@ -9,10 +9,10 @@ export type UserProps = {
   email: string;
   password: string;
   phone: string;
-  signatureCode?: string;
-  role?: UserRole;
-  createdAt?: string;
-  updatedAt?: string;
+  signatureCode?: Partial<string>;
+  role?: Partial<UserRole>;
+  createdAt?: Partial<string>;
+  updatedAt?: Partial<string>;
 };
 
 export class UserEntity {

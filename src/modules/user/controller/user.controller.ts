@@ -32,6 +32,7 @@ export default class UserController {
         ...createUserDto,
         createdAt: formatarDataParaISO8601(new Date()),
         updatedAt: formatarDataParaISO8601(new Date()),
+        role: createUserDto.role,
       };
       const userEntity = new UserEntity(userProps);
       return await this.createUserService.execute(userEntity);
