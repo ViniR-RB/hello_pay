@@ -19,12 +19,25 @@ export default class UserModel {
   email: string;
   @Column()
   password: string;
-  @Column()
+  @Column({ nullable: true })
   phone: string;
   @Column({ nullable: true })
   signatureCode?: string;
   @Column({ type: 'varchar', length: 5, default: 'user' })
   role: UserRole;
+
+  @Column({ nullable: true })
+  zipCode?: string;
+
+  @Column({ nullable: true })
+  state?: string;
+
+  @Column({ nullable: true })
+  city?: string;
+
+  @Column({ nullable: true })
+  address?: string;
+
   @CreateDateColumn()
   createdAt: string;
   @UpdateDateColumn()
@@ -41,6 +54,10 @@ export default class UserModel {
         role: this.role,
         password: this.password,
         signatureCode: this.signatureCode,
+        address: this.address,
+        city: this.city,
+        state: this.state,
+        zipCode: this.zipCode,
       },
       this.id,
     );

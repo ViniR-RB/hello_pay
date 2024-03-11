@@ -1,5 +1,5 @@
 import { UserEntity } from '../domain/user_entity';
-import { UpdateUserDto } from '../dto/updated_user.dto';
+import { UpdateUserDto } from '../dto/updated_user_admin.dto';
 import UserModel from '../infra/models/user.model';
 
 export default interface UserRepositoryInterface {

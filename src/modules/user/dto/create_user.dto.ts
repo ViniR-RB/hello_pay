@@ -1,17 +1,13 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsString } from 'class-validator';
-import { UserRole } from '../domain/user_entity';
+import { IsString } from 'class-validator';
+import { CreateUserAdminDto } from './create_user_admin.dto';
 
-export class CreateUserDto {
+export default class CreateUserDto extends CreateUserAdminDto {
   @IsString()
-  name: string;
-  @IsEmail()
-  email: string;
-  @IsNotEmpty()
-  password: string;
+  zipCode: string;
   @IsString()
-  phone: string;
+  state: string;
   @IsString()
-  signatureCode: string;
-  @IsEnum(UserRole)
-  role: UserRole;
+  city: string;
+  @IsString()
+  address: string;
 }

@@ -2,7 +2,7 @@ import ServiceException from 'src/core/exceptions/service.exception';
 import UserRepositoryInterface from '../adapters/user_repository';
 import UpdateUserUseCase from '../domain/usecase/update_user_use_case';
 import { UserEntity } from '../domain/user_entity';
-import { UpdateUserDto } from '../dto/updated_user.dto';
+import { UpdateUserDto } from '../dto/updated_user_admin.dto';
 
 export default class UpdateUserService implements UpdateUserUseCase {
   constructor(private readonly userRepository: UserRepositoryInterface) {}

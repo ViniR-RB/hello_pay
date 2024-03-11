@@ -1,4 +1,4 @@
-import { UpdateUserDto } from '../../dto/updated_user.dto';
+import { UpdateUserDto } from '../../dto/updated_user_admin.dto';
 import { UserEntity } from '../user_entity';
 
 export default interface UpdateUserUseCase {

@@ -2,7 +2,7 @@ import EncryptionService from 'src/core/services/encryption.service';
 import { Repository } from 'typeorm';
 import UserRepositoryInterface from '../adapters/user_repository';
 import { UserEntity } from '../domain/user_entity';
-import { UpdateUserDto } from '../dto/updated_user.dto';
+import { UpdateUserDto } from '../dto/updated_user_admin.dto';
 import UserModel from './models/user.model';
 
 export default class UserRepositoryImpl implements UserRepositoryInterface {

@@ -8,11 +8,15 @@ export type UserProps = {
   name: string;
   email: string;
   password: string;
-  phone: string;
+  phone?: Partial<string>;
   signatureCode?: Partial<string>;
   role?: Partial<UserRole>;
   createdAt?: Partial<string>;
   updatedAt?: Partial<string>;
+  zipCode?: Partial<string>;
+  state?: Partial<string>;
+  city?: Partial<string>;
+  address?: Partial<string>;
 };
 
 export class UserEntity {
@@ -22,9 +26,14 @@ export class UserEntity {
     this.userProps = {
       ...props,
       signatureCode: props.signatureCode || null,
+      phone: props.phone || null,
       createdAt: props.createdAt || formatarDataParaISO8601(new Date()),
       updatedAt: props.updatedAt || formatarDataParaISO8601(new Date()),
       role: props.role || UserRole.User,
+      zipCode: props.zipCode || null,
+      state: props.state || null,
+      city: props.city || null,
+      address: props.address || null,
     };
     this.id = id || randomUUID();
   }

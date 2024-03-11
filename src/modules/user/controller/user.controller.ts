@@ -1,7 +1,9 @@
 import {
   Body,
   Controller,
+  HttpCode,
   HttpException,
+  HttpStatus,
   Inject,
   Param,
   ParseUUIDPipe,
@@ -9,12 +11,12 @@ import {
   Put,
 } from '@nestjs/common';
 import RepositoryException from 'src/core/exceptions/repository.exception';
-import { formatarDataParaISO8601 } from 'src/core/utils/formated_date_iso';
 import { CreateUserUseCase } from '../domain/usecase/create_user_use_case';
 import UpdateUserUseCase from '../domain/usecase/update_user_use_case';
 import { UserEntity, UserProps } from '../domain/user_entity';
-import { CreateUserDto } from '../dto/create_user.dto';
-import { UpdateUserDto } from '../dto/updated_user.dto';
+import CreateUserDto from '../dto/create_user.dto';
+import { CreateUserAdminDto } from '../dto/create_user_admin.dto';
+import { UpdateUserAdminDto } from '../dto/updated_user_admin.dto';
 import { CREATE_USER_USE_CASE, UPDATE_USER_USE_CASE } from '../symbols';
 
 @Controller('/api/user')
@@ -25,28 +27,40 @@ export default class UserController {
     @Inject(UPDATE_USER_USE_CASE)
     private readonly updateUserService: UpdateUserUseCase,
   ) {}
-  @Post('')
-  async create(@Body() createUserDto: CreateUserDto) {
+  @Post('/admin')
+  @HttpCode(HttpStatus.CREATED)
+  async createUserAdmin(@Body() createUserAdminDto: CreateUserAdminDto) {
     try {
       const userProps: UserProps = {
-        ...createUserDto,
-        createdAt: formatarDataParaISO8601(new Date()),
-        updatedAt: formatarDataParaISO8601(new Date()),
-        role: createUserDto.role,
+        ...createUserAdminDto,
+        role: createUserAdminDto.role,
       };
-      const userEntity = new UserEntity(userProps);
-      return await this.createUserService.execute(userEntity);
+      const userAdminEntity = new UserEntity(userProps);
+      return await this.createUserService.execute(userAdminEntity);
     } catch (error) {
       if (error instanceof RepositoryException) {
         throw new HttpException(error.message, error.statusCode);
       }
     }
   }
+  @Post('/user')
+  @HttpCode(HttpStatus.CREATED)
+  async createUser(@Body() createUser: CreateUserDto) {
+    try {
+      const userProps: UserProps = {
+        ...createUser,
+        role: createUser.role,
+      };
+      const userEntity = new UserEntity(userProps);
+      return await this.createUserService.execute(userEntity);
+    } catch (e) {}
+  }
 
   @Put(':id')
+  @HttpCode(HttpStatus.OK)
   async update(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() updatedUserDto: UpdateUserDto,
+    @Body() updatedUserDto: UpdateUserAdminDto,
   ) {
     return this.updateUserService.execute(id, updatedUserDto);
   }
