@@ -3,6 +3,9 @@ import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
 import CoreModule from 'src/core/core.module';
 import EncryptionService from 'src/core/services/encryption.service';
 import { Repository } from 'typeorm';
+import SignatureRepositoryInterface from '../signature/adapters/signature_repository';
+import SignatureModule from '../signature/signature.module';
+import { SIGNATURE_REPOSITORY } from '../signature/symbols';
 import UserRepositoryInterface from './adapters/user_repository';
 import CreateUserService from './application/create_user.service';
 import UpdateUserService from './application/update_user.service';
@@ -15,16 +18,26 @@ import {
   USER_REPOSITORY,
 } from './symbols';
 @Module({
-  imports: [CoreModule, TypeOrmModule.forFeature([UserModel])],
+  imports: [CoreModule, SignatureModule, TypeOrmModule.forFeature([UserModel])],
   controllers: [UserController],
   providers: [
     {
-      inject: [getRepositoryToken(UserModel), EncryptionService],
+      inject: [
+        getRepositoryToken(UserModel),
+        SIGNATURE_REPOSITORY,
+        EncryptionService,
+      ],
       provide: USER_REPOSITORY,
       useFactory: (
         userRepository: Repository<UserModel>,
+        signatureRepository: SignatureRepositoryInterface,
         encryptionService: EncryptionService,
-      ) => new UserRepositoryImpl(userRepository, encryptionService),
+      ) =>
+        new UserRepositoryImpl(
+          userRepository,
+          signatureRepository,
+          encryptionService,
+        ),
     },
     {
       inject: [USER_REPOSITORY],
@@ -41,12 +54,22 @@ import {
   ],
   exports: [
     {
-      inject: [getRepositoryToken(UserModel), EncryptionService],
+      inject: [
+        getRepositoryToken(UserModel),
+        SIGNATURE_REPOSITORY,
+        EncryptionService,
+      ],
       provide: USER_REPOSITORY,
       useFactory: (
         userRepository: Repository<UserModel>,
+        signatureRepository: SignatureRepositoryInterface,
         encryptionService: EncryptionService,
-      ) => new UserRepositoryImpl(userRepository, encryptionService),
+      ) =>
+        new UserRepositoryImpl(
+          userRepository,
+          signatureRepository,
+          encryptionService,
+        ),
     },
     {
       inject: [USER_REPOSITORY],

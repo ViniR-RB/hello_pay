@@ -11,6 +11,19 @@ export default class SignatureRepositoryImpl
     @InjectRepository(SignatureModel)
     private readonly signatureRepoitory: Repository<SignatureModel>,
   ) {}
+  async findOneById(id: string | null): Promise<SignatureModel | null> {
+    try {
+      const signature: SignatureModel | null =
+        await this.signatureRepoitory.findOneOrFail({
+          where: {
+            id: id,
+          },
+        });
+      return signature;
+    } catch (error) {
+      return null;
+    }
+  }
   async create(signature: SiganatureEntity): Promise<SiganatureEntity> {
     const data = {
       ...signature,

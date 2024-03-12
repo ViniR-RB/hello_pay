@@ -17,6 +17,7 @@ export type UserProps = {
   state?: Partial<string>;
   city?: Partial<string>;
   address?: Partial<string>;
+  document?: Partial<string>;
 };
 
 export class UserEntity {
@@ -34,6 +35,7 @@ export class UserEntity {
       state: props.state || null,
       city: props.city || null,
       address: props.address || null,
+      document: props.document || null,
     };
     this.id = id || randomUUID();
   }

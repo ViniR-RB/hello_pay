@@ -5,8 +5,13 @@ import {
   HttpStatus,
   Inject,
   Post,
+  UseGuards,
 } from '@nestjs/common';
-import { CreateUserDto } from 'src/modules/user/dto/create_user.dto';
+import { Roles } from 'src/core/decorators/role.decorator';
+import { AuthGuard } from 'src/core/guards/auth.guard';
+import { RolesGuard } from 'src/core/guards/role.guard';
+import { UserRole } from 'src/modules/user/domain/user_entity';
+import { CreateUserAdminDto } from 'src/modules/user/dto/create_user_admin.dto';
 import LoginUserService from '../application/login_user.service';
 import RegisterUserService from '../application/register_user.service';
 import LoginDto from '../dto/login_dto';
@@ -22,7 +27,9 @@ export class AuthController {
   ) {}
   @Post('/register')
   @HttpCode(HttpStatus.CREATED)
-  async register(@Body() createUserDto: CreateUserDto) {
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles(UserRole.Admin)
+  async register(@Body() createUserDto: CreateUserAdminDto) {
     return await this.registerUserService.createUser(createUserDto);
   }
 

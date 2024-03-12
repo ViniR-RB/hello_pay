@@ -2,9 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { SignatureModel } from '../../../signature/infra/model/signature.model';
 import { UserEntity, UserRole } from '../../domain/user_entity';
 
 @Entity({ name: 'users' })
@@ -21,8 +23,12 @@ export default class UserModel {
   password: string;
   @Column({ nullable: true })
   phone: string;
-  @Column({ nullable: true })
-  signatureCode?: string;
+  @ManyToOne(() => SignatureModel, {
+    onDelete: 'SET NULL',
+    nullable: true,
+  })
+  signature?: SignatureModel;
+
   @Column({ type: 'varchar', length: 5, default: 'user' })
   role: UserRole;
 
@@ -37,6 +43,9 @@ export default class UserModel {
 
   @Column({ nullable: true })
   address?: string;
+
+  @Column({ nullable: true })
+  document?: string;
 
   @CreateDateColumn()
   createdAt: string;
@@ -53,11 +62,12 @@ export default class UserModel {
         email: this.email,
         role: this.role,
         password: this.password,
-        signatureCode: this.signatureCode,
+        signatureCode: this.signature.id,
         address: this.address,
         city: this.city,
         state: this.state,
         zipCode: this.zipCode,
+        document: this.document,
       },
       this.id,
     );

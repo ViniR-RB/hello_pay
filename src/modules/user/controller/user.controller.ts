@@ -10,7 +10,6 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import RepositoryException from 'src/core/exceptions/repository.exception';
 import { CreateUserUseCase } from '../domain/usecase/create_user_use_case';
 import UpdateUserUseCase from '../domain/usecase/update_user_use_case';
 import { UserEntity, UserProps } from '../domain/user_entity';
@@ -38,12 +37,10 @@ export default class UserController {
       const userAdminEntity = new UserEntity(userProps);
       return await this.createUserService.execute(userAdminEntity);
     } catch (error) {
-      if (error instanceof RepositoryException) {
-        throw new HttpException(error.message, error.statusCode);
-      }
+      throw new HttpException(error.message, error.statusCode);
     }
   }
-  @Post('/user')
+  @Post('')
   @HttpCode(HttpStatus.CREATED)
   async createUser(@Body() createUser: CreateUserDto) {
     try {
@@ -53,7 +50,9 @@ export default class UserController {
       };
       const userEntity = new UserEntity(userProps);
       return await this.createUserService.execute(userEntity);
-    } catch (e) {}
+    } catch (e) {
+      throw new HttpException(e.message, e.statusCode);
+    }
   }
 
   @Put(':id')
