@@ -9,7 +9,7 @@
         "*.entity.ts": "Nest-controller",
         "*.exception.ts": "Nest",
     },
-    "workbench.colorTheme": "Min Tomorrow Dark",
+    "workbench.colorTheme": "Default Dark+",
     "errorLens.enabled": true,
     "errorLens.messageEnabled": true,
     "editor.codeActionsOnSave": {
