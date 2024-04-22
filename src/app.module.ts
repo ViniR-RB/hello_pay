@@ -4,6 +4,7 @@ import CoreModule from './core/core.module';
 import ConfigurationService from './core/services/configuration.service';
 import AuthModule from './modules/auth/auth.module';
 import SignatureModule from './modules/signature/signature.module';
+import TransactionsModule from './modules/transactions/transactions.module';
 import UserModule from './modules/user/user.module';
 
 @Module({
@@ -12,6 +13,7 @@ import UserModule from './modules/user/user.module';
     UserModule,
     SignatureModule,
     AuthModule,
+    TransactionsModule,
     TypeOrmModule.forRootAsync({
       imports: [CoreModule],
       inject: [ConfigurationService],

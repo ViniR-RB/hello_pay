@@ -14,5 +14,6 @@
     "errorLens.messageEnabled": true,
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "explicit"
-    }
+    },
+    "git.ignoreLimitWarning": true
 }

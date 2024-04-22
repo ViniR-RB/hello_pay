@@ -53,6 +53,7 @@ export default class UserRepositoryImpl implements UserRepositoryInterface {
   }
 
   async findOneById(id: string): Promise<UserModel | null> {
+    console.log(id);
     return await this.userRepository.findOneBy({
       id: id,
     });
