@@ -4,6 +4,7 @@ import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
 import {
   TransactionEntity,
   TransactionPaymentType,
+  TransactionStatus,
 } from '../../domain/entity/transaction.entity';
 
 @Entity({ name: 'transactions' })
@@ -19,6 +20,8 @@ export default class TransactionModel {
 
   @Column({ type: 'date', name: 'payment_date' })
   paymentDate: string;
+  @Column({ type: 'enum', name: 'transaction_status', enum: TransactionStatus })
+  transactionStatus: TransactionStatus;
 
   @ManyToOne(() => UserModel, (user) => user.id)
   customer: UserModel;
@@ -38,6 +41,7 @@ export default class TransactionModel {
       payment_date: this.paymentDate,
       customer: this.customer,
       signature: this.signature,
+      transaction_status: this.transactionStatus,
     };
   }
 
@@ -48,6 +52,7 @@ export default class TransactionModel {
       paymentType: this.paymentType,
       customer: this.customer.id,
       paymentDate: this.paymentDate,
+      transactionStatus: this.transactionStatus,
     };
     return new TransactionEntity({ ...transactionProps }, this.id);
   }

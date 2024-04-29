@@ -4,6 +4,7 @@ import {
   TransactionEntity,
   TransactionPaymentType,
   TransactionProps,
+  TransactionStatus,
 } from './transaction.entity';
 
 describe('Unit Test in Transaction Entity constructor', () => {
@@ -19,15 +20,17 @@ describe('Unit Test in Transaction Entity constructor', () => {
       signatureCode: signature.signatureId,
     });
     const transactionProps: TransactionProps = {
-      signature: signature,
+      signature: signature.signatureId,
       total: signature.signatureValue,
-      customer: customer,
+      customer: customer.id,
       paymentType: TransactionPaymentType.CreditCard,
+      paymentDate: '2021-01-01',
     };
     const transaction = new TransactionEntity(transactionProps);
 
     expect(transaction).toBeInstanceOf(TransactionEntity);
     expect(transaction.transactionId).toBeDefined();
+    expect(transaction.transactionStatus).toEqual(TransactionStatus.Created);
     expect(transaction.transactionSignatureCode).toEqual(signature.signatureId);
   });
 });

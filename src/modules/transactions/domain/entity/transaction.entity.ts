@@ -3,7 +3,12 @@ import { randomUUID } from 'crypto';
 export enum TransactionPaymentType {
   CreditCard = 'CreditCard',
 }
-
+export enum TransactionStatus {
+  Created = 'Created',
+  Approved = 'Approved',
+  Declined = 'Declined',
+  Pending = 'Pending',
+}
 export type TransactionProps = {
   signature: string;
   total: number;
@@ -11,6 +16,7 @@ export type TransactionProps = {
   customer: string;
   processorResponse?: Partial<Record<string, any>>;
   paymentDate: string;
+  transactionStatus?: Partial<TransactionStatus>;
 };
 export class TransactionEntity {
   constructor(
@@ -21,6 +27,8 @@ export class TransactionEntity {
     this.props = {
       ...props,
       processorResponse: this.props.processorResponse || {},
+      transactionStatus:
+        this.props.transactionStatus || TransactionStatus.Created,
     };
   }
 
@@ -50,5 +58,8 @@ export class TransactionEntity {
 
   get transactionSignatureCode() {
     return this.props.signature;
+  }
+  get transactionStatus() {
+    return this.props.transactionStatus;
   }
 }
